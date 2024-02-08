@@ -59,7 +59,7 @@ namespace YakuzaGMDTexCopy
                         for (int i = 0; i< materialCount; i++)
                         {
                             br.BaseStream.Seek(2, SeekOrigin.Current);
-                            string materialName = new string(br.ReadChars(0x1E)).TrimEnd('\0');
+                            string materialName = new string(br.ReadChars(0x1E)).TrimEnd('\0').ToLower();
 
                             Console.WriteLine($"{materialName}");
 
@@ -92,7 +92,7 @@ namespace YakuzaGMDTexCopy
                     {
 
                         FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
-                        folderBrowserDialog.Description = "Select the directory where the model's textures are located";
+                        folderBrowserDialog.Description = "Select the directory where the model's textures are located (usually you can just select the chara par folder output, you dont need to specifically choose the texture folder)";
 
                         result = folderBrowserDialog.ShowDialog();
 
@@ -149,12 +149,12 @@ namespace YakuzaGMDTexCopy
 
                     // big mess here
 
-                    List<string> FoundFiles = Directory.EnumerateFiles(texturesDir, "*.dds", SearchOption.AllDirectories).ToList();
+                    List<string> FoundFiles = Directory.EnumerateFiles(texturesDir, "*.dds", SearchOption.AllDirectories).Select(path => path.ToLower()).ToList();
                     List<string> FoundFilesCommon = new List<string>();
 
                     if (commonDir != "null")
                     {
-                        FoundFilesCommon = Directory.EnumerateFiles(commonDir, "*.dds", SearchOption.AllDirectories).ToList();
+                        FoundFilesCommon = Directory.EnumerateFiles(commonDir, "*.dds", SearchOption.AllDirectories).Select(path => path.ToLower()).ToList();
                     }
 
                     FoundFiles.RemoveAll(a => !TextureNames.Any(b => Path.GetFileName(a) == b));
