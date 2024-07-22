@@ -27,7 +27,7 @@ namespace YakuzaGMDTexCopy
                 string commonDir = "null";
                 string targetDir = "null";
 
-                if (arg0.Name.ToLower().Contains(".gmd"))
+                if (arg0.Name.ToLower().EndsWith(".gmd"))
                 {
                     Console.WriteLine($"Attempting to parse {arg0.Name}");
 
